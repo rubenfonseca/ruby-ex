@@ -18,10 +18,9 @@ end
 map '/bcrypt' do
   expensive = proc do |env|
     [200, { "Content-Type" => "text/plain" }, [
-      BCrypt::Password.create(SecureRandom.hex))
+      BCrypt::Password.create(SecureRandom.hex)
     ]]
   end
-
   run expensive
 end
 
