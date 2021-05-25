@@ -1,14 +1,18 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    bcrypt (3.1.16)
     nio4r (2.5.2)
     puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.3)
+    securerandom (0.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt
   puma
   rack
+  securerandom

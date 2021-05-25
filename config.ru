@@ -1,4 +1,8 @@
 require 'rack/lobster'
+require 'bcrypt'
+require 'securerandom'
+
+BCrypt::Engine.cost = 20
 
 map '/health' do
   health = proc do |env|
@@ -9,6 +13,16 @@ end
 
 map '/lobster' do
   run Rack::Lobster.new
+end
+
+map '/bcrypt' do
+  expensive = proc do |env|
+    [200, { "Content-Type" => "text/plain" }, [
+      BCrypt::Password.create(SecureRandom.hex))
+    ]]
+  end
+
+  run expensive
 end
 
 map '/headers' do
