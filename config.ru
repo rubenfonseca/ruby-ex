@@ -2,7 +2,7 @@ require 'rack/lobster'
 require 'bcrypt'
 require 'securerandom'
 
-BCrypt::Engine.cost = 20
+BCrypt::Engine.cost = 13
 
 map '/health' do
   health = proc do |env|
