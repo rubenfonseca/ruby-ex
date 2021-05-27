@@ -26,17 +26,17 @@ map '/bcrypt' do
 end
 
 map '/db' do
-  $stderr.puts(ENV.inspect)
-
-  DBCONN = PG.connect(
-    host: ENV['DATABASE_HOST'],
-    port: ENV['DATABASE_PORT'],
-    dbname: ENV['DATABASE_NAME'],
-    user: ENV['DATABASE_USER'],
-    password: ENV['DATABASE_PASSWORD']
-  )
-
   db = proc do |env|
+    $stderr.puts(ENV.inspect)
+
+    DBCONN = PG.connect(
+      host: ENV['DATABASE_HOST'],
+      port: ENV['DATABASE_PORT'],
+      dbname: ENV['DATABASE_NAME'],
+      user: ENV['DATABASE_USER'],
+      password: ENV['DATABASE_PASSWORD']
+    )
+
     [200, { "Content-Type" => "text/plain" }, [
       DBCONN.server_version
     ]]
