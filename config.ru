@@ -35,13 +35,15 @@ map '/db' do
   )
 
   db = proc do |env|
+    msg = []
+
     DBCONN.exec("SELECT inet_server_addr(), version()") do |result|
       result.each do |row|
-        msg = row.values_at('inet_server_addr', 'version').join(" | ")
+        msg << row.values_at('inet_server_addr', 'version').join(" | ")
       end
     end
 
-    [200, { "Content-Type" => "text/plain" }, [msg]]
+    [200, { "Content-Type" => "text/plain" }, msg]
   end
 
   run db
