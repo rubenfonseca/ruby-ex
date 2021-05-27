@@ -35,15 +35,21 @@ map '/db' do
   )
 
   db = proc do |env|
-    msg = []
+    begin
+      msg = []
 
-    DBCONN.exec("SELECT inet_server_addr(), version()") do |result|
-      result.each do |row|
-        msg << row.values_at('inet_server_addr', 'version').join(" | ")
+      DBCONN.exec("SELECT inet_server_addr(), version()") do |result|
+        result.each do |row|
+          msg << row.values_at('inet_server_addr', 'version').join(" | ")
+        end
       end
-    end
 
-    [200, { "Content-Type" => "text/plain" }, msg]
+      [200, { "Content-Type" => "text/plain" }, msg]
+    rescue PG::UnableToSen
+      $stderr.puts "No connection to server"
+      DBCONN.reset
+      retry
+    end
   end
 
   run db
