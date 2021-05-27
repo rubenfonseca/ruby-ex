@@ -1,8 +1,17 @@
 require 'rack/lobster'
 require 'bcrypt'
 require 'securerandom'
+require 'pg'
 
 BCrypt::Engine.cost = 13
+
+DBCONN = PG.connect(
+  host: ENV['DATABASE_HOST'],
+  port: ENV['DATABASE_PORT'],
+  dbname: ENV['DATABASE_NAME'],
+  user: ENV['DATABASE_USER'],
+  password: ENV['DATABASE_PASSWORD']
+)
 
 map '/health' do
   health = proc do |env|
@@ -22,6 +31,16 @@ map '/bcrypt' do
     ]]
   end
   run expensive
+end
+
+map '/db' do
+  db = proc do |env|
+    [200, { "Content-Type" => "text/plain" }, [
+      DBCONN.server_version
+    ]]
+  end
+
+  run db
 end
 
 map '/headers' do
