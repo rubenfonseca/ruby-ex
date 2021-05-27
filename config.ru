@@ -34,9 +34,13 @@ map '/db' do
     password: ENV['DATABASE_PASSWORD']
   )
 
+  DBCONN.exec("CREATE TABLE IF NOT EXISTS pings (id uuid DEFAULT uuid_generate_v4(), PRIMARY KEY (id))")
+
   db = proc do |env|
     begin
       msg = []
+
+      DBCONN.exec("INSERT INTO pings DEFAULT VALUES RETURNING id")
 
       DBCONN.exec("SELECT inet_server_addr(), version()") do |result|
         result.each do |row|
