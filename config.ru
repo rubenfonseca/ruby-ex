@@ -34,7 +34,7 @@ map '/db' do
     password: ENV['DATABASE_PASSWORD']
   )
 
-  DBCONN.exec('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; CREATE TABLE IF NOT EXISTS pings (id uuid DEFAULT uuid_generate_v4(), PRIMARY KEY (id))')
+  DBCONN.exec('CREATE TABLE IF NOT EXISTS pings (id uuid DEFAULT uuid_generate_v4(), PRIMARY KEY (id))')
 
   db = proc do |env|
     begin
