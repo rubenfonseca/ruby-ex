@@ -45,7 +45,7 @@ map '/db' do
       end
 
       [200, { "Content-Type" => "text/plain" }, msg]
-    rescue PG::UnableToSen
+    rescue PG::UnableToSend
       $stderr.puts "No connection to server"
       DBCONN.reset
       retry
