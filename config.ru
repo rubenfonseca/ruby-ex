@@ -78,7 +78,7 @@ end
 map '/heavy_page' do
   page = proc do |env|
     request = Rack::Request.new(env)
-    static_host = request["cdn"].present? ? ENV["CDN_HOST"] : ""
+    static_host = request["cdn"].blank? ? ENV["CDN_HOST"] : ""
 
     [200, { "Content-Type" => "text/html" }, [<<HTML
 <!doctype html>
