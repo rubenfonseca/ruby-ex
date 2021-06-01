@@ -42,9 +42,9 @@ map '/db' do
 
       DBCONN.exec("INSERT INTO pings DEFAULT VALUES RETURNING id")
 
-      DBCONN.exec("SELECT inet_server_addr(), version()") do |result|
+      DBCONN.exec("SELECT inet_server_addr(), current_timestamp, version()") do |result|
         result.each do |row|
-          msg << row.values_at('inet_server_addr', 'version').join(" | ")
+          msg << row.values_at('inet_server_addr', 'current_timestamp', 'version').join(" | ")
         end
       end
 
