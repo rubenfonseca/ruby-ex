@@ -97,7 +97,7 @@ map '/heavy_page' do
 
   <img src="#{static_host}/static/bender.jpg" />
 
-  #{images}
+  #{images.join("\n")}
 </body>
 </html>
 HTML
