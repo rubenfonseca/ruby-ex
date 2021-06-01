@@ -80,7 +80,7 @@ map '/heavy_page' do
     request = Rack::Request.new(env)
     static_host = request.params["cdn"].nil? ? "" : ENV["CDN_HOST"]
 
-    images = 20.times.each_with_object([]) do |i, im|
+    images = 50.times.each_with_object([]) do |i, im|
       im << "<img src=\"#{static_host}/static/rnd#{i}.jpg\" />"
     end
 
