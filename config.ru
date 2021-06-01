@@ -80,6 +80,10 @@ map '/heavy_page' do
     request = Rack::Request.new(env)
     static_host = request["cdn"].nil? ? ENV["CDN_HOST"] : ""
 
+    20.times.each_with_object([]) do |i, images|
+      images << "<img src=\"#{static_host}/static/rnd#{i}.jpg\" />"
+    end
+
     [200, { "Content-Type" => "text/html" }, [<<HTML
 <!doctype html>
 <html lang="en">
@@ -89,7 +93,11 @@ map '/heavy_page' do
   <title>Welcome to OpenShift</title>
 </head>
 <body>
+  <h1>Hello heavy page</h1>
+
   <img src="#{static_host}/static/bender.jpg" />
+
+  #{images}
 </body>
 </html>
 HTML
