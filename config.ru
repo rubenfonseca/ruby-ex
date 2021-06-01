@@ -78,7 +78,7 @@ end
 map '/heavy_page' do
   page = proc do |env|
     request = Rack::Request.new(env)
-    static_host = request["cdn"].nil? ? ENV["CDN_HOST"] : ""
+    static_host = request.params["cdn"].nil? ? ENV["CDN_HOST"] : ""
 
     images = 20.times.each_with_object([]) do |i, im|
       im << "<img src=\"#{static_host}/static/rnd#{i}.jpg\" />"
