@@ -1,11 +1,12 @@
 require 'rack/lobster'
+require 'rack/contrib'
 require 'bcrypt'
 require 'securerandom'
 require 'pg'
 
 BCrypt::Engine.cost = 13
 
-use Rack::Static, urls: ["/static"]
+use Rack::StaticCache, urls: ["/static"]
 
 map '/health' do
   health = proc do |env|

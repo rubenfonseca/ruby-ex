@@ -7,6 +7,8 @@ GEM
     puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.3)
+    rack-contrib (2.3.0)
+      rack (~> 2.0)
     securerandom (0.1.0)
 
 PLATFORMS
@@ -17,6 +19,7 @@ DEPENDENCIES
   pg
   puma
   rack
+  rack-contrib
   securerandom
 
 BUNDLED WITH

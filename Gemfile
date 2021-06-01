@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 gem 'rack'
+gem 'rack-contrib'
 gem 'puma'
 gem 'bcrypt'
 gem 'securerandom'
