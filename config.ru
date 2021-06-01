@@ -5,6 +5,8 @@ require 'pg'
 
 BCrypt::Engine.cost = 13
 
+use Rack::Static, urls: ["/static"]
+
 map '/health' do
   health = proc do |env|
     [200, { "Content-Type" => "text/html" }, ["1"]]
@@ -71,6 +73,30 @@ map '/headers' do
     ]]
   end
   run headers
+end
+
+map '/heavy_page' do
+  page = proc do |env|
+    request = Rack::Request.new(env)
+    static_host = request["cdn"].present? ? ENV["CDN_HOST"] : ""
+
+    [200, { "Content-Type" => "text/html" }, [<<HTML
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Welcome to OpenShift</title>
+</head>
+<body>
+  <img src="#{static_host}/static/bender.jpg" />
+</body>
+</html>
+HTML
+    ]]
+  end
+
+  run page
 end
 
 map '/' do
