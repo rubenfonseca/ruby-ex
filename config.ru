@@ -6,6 +6,17 @@ require 'pg'
 
 BCrypt::Engine.cost = 13
 
+module SlowRackFiles
+  def call(env)
+    sleep rand(0.1..0.3)
+    super(env)
+  end
+end
+
+class Rack::Files
+  prepend SlowRackFiles
+end
+
 use Rack::StaticCache, urls: ["/static"]
 
 map '/health' do
