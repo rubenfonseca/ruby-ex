@@ -8,7 +8,7 @@ BCrypt::Engine.cost = 13
 
 module SlowRackFiles
   def call(env)
-    sleep rand(0.1..0.3)
+    sleep rand(0.3..0.6)
     super(env)
   end
 end
